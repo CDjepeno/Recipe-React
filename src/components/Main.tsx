@@ -1,5 +1,6 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router-dom';
+import Header from './Header';
 
 
 type Params = {
@@ -7,10 +8,12 @@ type Params = {
 }
  
 const Main: React.FC<RouteComponentProps<Params>> = ({match}) => {
-        
+    const pseudo = match.params.pseudo;
+    const formatPseudo = (pseudo: any) => /[aeiouy]/i.test(pseudo[0]) ? `d'${pseudo}` : `de ${pseudo}`    
+
     return ( 
         <div className="box">
-            <h1>Bonjour {match.params.pseudo}</h1>
+            <Header pseudo={formatPseudo(pseudo)} />
             <div className="cards">
                 <div className="card">
                     <h2>Une Carte</h2>
