@@ -5,6 +5,7 @@ import pizza from '../assets/images/pizza.jpeg'
 import saumon from '../assets/images/saumon.jpeg'
 import tartine from '../assets/images/tartine.jpg'
 import hamburger from '../assets/images/hamburger.jpeg'
+import ImageDefault from '../assets/images/default.jpeg'
 
 
 export interface CardProps {
@@ -12,8 +13,10 @@ export interface CardProps {
     index: any
 }
  
-const Card: React.FC<CardProps> = ({details, index}) => {
-    console.log(details.image);
+const Card: React.FC<CardProps> = ({details, index}) => { 
+
+    console.log(details);
+    
     let imgToPrint = "";
 
     if(details.image === "chocolat.jpeg") {
@@ -29,7 +32,7 @@ const Card: React.FC<CardProps> = ({details, index}) => {
     }else if(details.image === "saumon.jpeg") {
         imgToPrint = saumon
     }
-
+    
     const ingredients = details.ingredients.split(',').map((item: any, index: any) => {
         return (
             <li key={index}>{item}</li>
@@ -41,12 +44,22 @@ const Card: React.FC<CardProps> = ({details, index}) => {
             <li key={index}>{item}</li>
         )
     })
+
+    /**
+     * Vérification en cas d'erreur au niveau de l'image.
+     */
+    const requireImage = (chemin:any) => {
+        try {
+            return imgToPrint
+        } catch (error) {
+            return ImageDefault
+        }
+    }
     
     return ( 
         <div className="card" key={index}>
             <div className="image">
-                {/* <img src={require(`../assets/images/${details.image}`)} alt={details.name}/> */}
-                <img src={imgToPrint} alt={details.name}/>
+                <img src={requireImage(imgToPrint) } alt={details.name}/>
             </div>
             <div className="recette">
                 <h2>{details.name}</h2>
@@ -54,7 +67,7 @@ const Card: React.FC<CardProps> = ({details, index}) => {
                     {ingredients}
                 </ul>
                 <ol className="liste-instructions">
-                    {instructions}
+                    {instructions}  
                 </ol>
             </div>
         </div>
