@@ -12,7 +12,7 @@ export default class FirebaseService {
     static postRecipe(recipes: object, pseudo: string): Promise<object> {
         return axios
         .post(`https://recipe-react-41cd5-default-rtdb.europe-west1.firebasedatabase.app/${pseudo}.json`, {
-        ...recipes,
+            ...recipes,
         })
         .then(response => response.data)
         .catch(error => this.handleError(error))

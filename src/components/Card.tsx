@@ -12,27 +12,28 @@ export interface CardProps {
     details: any
     index: any
 }
- 
-const Card: React.FC<CardProps> = ({details, index}) => { 
 
+const Card: React.FC<CardProps> = ({ details, index }) => {
+
+    // alert('ok');
     console.log(details);
-    
+
     let imgToPrint = "";
 
-    if(details.image === "chocolat.jpeg") {
+    if (details.image === "chocolat.jpeg") {
         imgToPrint = chocolat
-    }else if(details.image === "epinard.jpg") {
+    } else if (details.image === "epinard.jpg") {
         imgToPrint = epinard
-    }else if(details.image === "hamburger.jpeg") {
+    } else if (details.image === "hamburger.jpeg") {
         imgToPrint = hamburger
-    }else if(details.image === "pizza.jpeg") {
+    } else if (details.image === "pizza.jpeg") {
         imgToPrint = pizza
-    }else if(details.image === "tartine.jpg") {
+    } else if (details.image === "tartine.jpg") {
         imgToPrint = tartine
-    }else if(details.image === "saumon.jpeg") {
+    } else if (details.image === "saumon.jpeg") {
         imgToPrint = saumon
     }
-    
+
     const ingredients = details.ingredients.split(',').map((item: any, index: any) => {
         return (
             <li key={index}>{item}</li>
@@ -48,18 +49,18 @@ const Card: React.FC<CardProps> = ({details, index}) => {
     /**
      * Vérification en cas d'erreur au niveau de l'image.
      */
-    const requireImage = (chemin:any) => {
+    const requireImage = (chemin: any) => {
         try {
             return imgToPrint
         } catch (error) {
             return ImageDefault
         }
     }
-    
-    return ( 
+
+    return (
         <div className="card" key={index}>
             <div className="image">
-                <img src={requireImage(imgToPrint) } alt={details.name}/>
+                <img src={requireImage(imgToPrint)} alt={details.name} />
             </div>
             <div className="recette">
                 <h2>{details.name}</h2>
@@ -71,7 +72,7 @@ const Card: React.FC<CardProps> = ({details, index}) => {
                 </ol>
             </div>
         </div>
-     );
+    );
 }
- 
+
 export default Card;

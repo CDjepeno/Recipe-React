@@ -1,51 +1,78 @@
 import React from 'react'
-import {useState} from 'react';
+import { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 
 export interface AddRecipeProps {
-   add?: any 
+    add: any
 }
- 
-const AddRecipe: React.FC<RouteComponentProps> = () => {
+
+const AddRecipe: React.FC<AddRecipeProps> = ({ add }) => {
     // console.log(match.params)
-     
+
     const [form, setForm] = useState({
-        name:"",
-        image:"",
-        ingredients:"",
-        instructions:""
+        name: "",
+        image: "",
+        ingredients: "",
+        instructions: ""
     })
 
     const handleChange = (e: any) => {
-        const {name, value} = e.currentTarget 
-        setForm({...form, [name]: value})
+        const { name, value } = e.currentTarget
+        setForm({ ...form, [name]: value })
     }
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        console.log(form);
-        e.preventDefautl();
         // console.log(form);
-        
-        // const recipe = {...recipes}
-        // const data = await FirebaseService.postRecipe(form,pseudo)
-        
+        // console.log(form);
+        const recipe = { ...form };
+        add(recipe);
+        setForm({
+            name: "",
+            image: "",
+            ingredients: "",
+            instructions: ""
+        })
     }
 
-    return ( 
+    return (
         <div>
             <div className="card">
                 <form className="admin-form ajouter-recette" onSubmit={handleSubmit}>
-                    <input type="text" name="name"  placeholder="nom du plat" value={form.name} onChange={handleChange}/>
-                    <input type="text" name="image" placeholder="nom de l'image" value={form.image} onChange={handleChange}/>
-                    <textarea  name="ingredients" rows={3} placeholder="Liste des ingrédients" value={form.ingredients} onChange={handleChange}/>
-                    <textarea  name="instructions" rows={15}  placeholder="Liste des instructions" value={form.instructions} onChange={handleChange}/>
-                    <input type="submit" value="valider"/>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="nom du plat"
+                        value={form.name}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="text"
+                        name="image"
+                        placeholder="nom de l'image"
+                        value={form.image}
+                        onChange={handleChange}
+                    />
+                    <textarea
+                        name="ingredients"
+                        rows={3}
+                        placeholder="Liste des ingrédients"
+                        value={form.ingredients}
+                        onChange={handleChange}
+                    />
+                    <textarea
+                        name="instructions"
+                        rows={15}
+                        placeholder="Liste des instructions"
+                        value={form.instructions}
+                        onChange={handleChange}
+                    />
+                    <button type="submit">+ Ajouter une recette</button>
                 </form>
             </div>
         </div>
-     );
+    );
 }
- 
+
 export default AddRecipe;

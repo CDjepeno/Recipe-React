@@ -3,13 +3,13 @@ import AddRecipe from './AddRecipe';
 
 export interface AdminProps {
     chargeExemple: any
-    add?: any
+    add: any
 }
  
 const Admin: React.FC<AdminProps> = ({chargeExemple, add}) => {
     return (<> 
         <div className="cards">
-            {/* <AddRecipe /> */}
+            <AddRecipe add={add}/>
             <footer>
                 <button onClick={chargeExemple}>Remplir</button>
             </footer>

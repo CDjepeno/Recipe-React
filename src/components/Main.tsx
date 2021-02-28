@@ -25,77 +25,51 @@ const Main: React.FC<RouteComponentProps<Params>> = ({match}) => {
     const pseudo = match.params.pseudo;
     let cards;
     const formatPseudo = (pseudo: any) => /[aeiouy]/i.test(pseudo[0]) ? `d'${pseudo}` : `de ${pseudo}` 
-    
-    // useEffect(() => { 
-    //     if(recipes){
-    //         postRecipes()
-    //     }
-    // },[recipes])  
-
+     
     useEffect(() => {
-        fetchRecipes()
+        fetchRecipes()        
     },[])
     
     const fetchExemple = () => {
         if(!recipes) {
             setRecipes({Recipes})
-            postRecipes()
         }
-    }
-
-    console.log(recipes);
-    
+    }    
 
     const fetchRecipes = async () => {
         const data = await FirebaseService.getRecipePseudo(pseudo)
-        // .then(response =>console.log(response)) 
-        // console.log(data);
-        
         setRecipes(data) 
     }
 
-    const postRecipes = async () => {        
-        const recipe = {...recipes}
+    const postRecipes = async (recipe: any) => {        
         await FirebaseService.postRecipe(recipe,pseudo)
+        fetchRecipes()
     }
 
-    const addRecipes = async (e:any, recipe: string) => {
-        e.preventDefautl();
-        // console.log(form);
+    const addRecipes =  (recipe: string) => {        
+        let Recipes: any= {};
+
+        Recipes[`recipe-${Date.now()}`] = recipe 
         
-        const r = {...recipes}
-        r[`recipe-${Date.now}`] = recipe
-        setRecipes({r})
-        const data = await FirebaseService.postRecipe(recipes,pseudo)
+        postRecipes(Recipes)
     }
     
-    if(!recipes) {
-        
-    } else {
- 
+    console.log(recipes);
+
+    if(recipes) { 
         const array = Object.keys(recipes);
    
         cards = array.map((key: any, index) => { 
-            console.log(recipes[key])  
+            console.log(recipes[key])   
             return (
-                
-                // <Card details={recipes[key]} index={index}></Card>
                 Object.values(recipes[key]).map((r:any) => {
                     return(
-                        // console.log(r)
-                        Object.values(r).map(recipe => {
-                            // console.log(recipe);
-                            return (
-                                <Card details={recipe} index={index}></Card>   
-                            )
-                        })
-                        // console.log('jsui la') 
+                        <Card details={r} index={index}></Card>   
                     )       
                 })   
             )
-        })
-    }
-
+        })  
+    } 
 
     return (<>
         <div className="box">
@@ -103,7 +77,7 @@ const Main: React.FC<RouteComponentProps<Params>> = ({match}) => {
             <div className="cards">
                 {cards}
             </div>
-            <Admin chargeExemple={fetchExemple} add={fetchExemple} />
+            <Admin chargeExemple={fetchExemple} add={addRecipes} />
         </div>
     </>);
 }
