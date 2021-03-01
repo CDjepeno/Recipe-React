@@ -52,19 +52,39 @@ const Main: React.FC<RouteComponentProps<Params>> = ({match}) => {
         Recipes[`recipe-${Date.now()}`] = recipe 
         
         postRecipes(Recipes)
+    
+    }
+    const updateRecipes =  (newRecipe: any, key: any) => {        
+        let Recipes: any= {};
+
+        Recipes[key] = newRecipe 
+        
+        postRecipes(Recipes)
     }
     
-    console.log(recipes);
+    const handleDelete = async (pseudo: any, id: any) => {
+        
+        await FirebaseService.deleteRecipe(pseudo, id)
+        fetchRecipes() 
+    }
 
     if(recipes) { 
         const array = Object.keys(recipes);
-   
+        
         cards = array.map((key: any, index) => { 
-            console.log(recipes[key])   
+              console.log(key)
+              let id= key
             return (
                 Object.values(recipes[key]).map((r:any) => {
+                    
                     return(
-                        <Card details={r} index={index}></Card>   
+                        <Card 
+                            details={r} 
+                            index={index} 
+                            del={handleDelete}
+                            pseudo={pseudo}
+                            id={key}
+                        ></Card>   
                     )       
                 })   
             )
@@ -77,7 +97,12 @@ const Main: React.FC<RouteComponentProps<Params>> = ({match}) => {
             <div className="cards">
                 {cards}
             </div>
-            <Admin chargeExemple={fetchExemple} add={addRecipes} />
+            <Admin 
+                chargeExemple={fetchExemple} 
+                add={addRecipes} 
+                update={updateRecipes}  
+                recipes={recipes}
+            />
         </div>
     </>);
 }

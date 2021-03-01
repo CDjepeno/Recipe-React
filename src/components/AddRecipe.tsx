@@ -8,7 +8,6 @@ export interface AddRecipeProps {
 }
 
 const AddRecipe: React.FC<AddRecipeProps> = ({ add }) => {
-    // console.log(match.params)
 
     const [form, setForm] = useState({
         name: "",
@@ -24,8 +23,6 @@ const AddRecipe: React.FC<AddRecipeProps> = ({ add }) => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        // console.log(form);
-        // console.log(form);
         const recipe = { ...form };
         add(recipe);
         setForm({

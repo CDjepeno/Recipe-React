@@ -11,12 +11,15 @@ import ImageDefault from '../assets/images/default.jpeg'
 export interface CardProps {
     details: any
     index: any
+    del: any 
+    pseudo: any
+    id: any
 }
 
-const Card: React.FC<CardProps> = ({ details, index }) => {
 
-    // alert('ok');
-    console.log(details);
+const Card: React.FC<CardProps> = ({ details, index, del, pseudo, id }) => {
+
+    console.log(id);
 
     let imgToPrint = "";
 
@@ -71,6 +74,7 @@ const Card: React.FC<CardProps> = ({ details, index }) => {
                     {instructions}  
                 </ol>
             </div>
+            <button onClick={() => del(pseudo, id)}>supprimer</button>
         </div>
     );
 }
